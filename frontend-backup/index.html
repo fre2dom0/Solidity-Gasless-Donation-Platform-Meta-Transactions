@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bağış Platformu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-hand-holding-heart"></i> Bağış Platformu</h1>
+            <div class="wallet-info">
+                <button id="connectWallet" class="btn btn-primary">
+                    <i class="fas fa-wallet"></i> Cüzdan Bağla
+                </button>
+                <div id="walletStatus" class="wallet-status" style="display: none;">
+                    <span id="walletAddress"></span>
+                    <span id="walletBalance"></span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Network Status -->
+            <div id="networkStatus" class="network-status">
+                <span id="networkInfo">Ağ durumu kontrol ediliyor...</span>
+            </div>
+
+            <!-- Donation Section -->
+            <section class="donation-section">
+                <h2><i class="fas fa-donate"></i> Bağış Yap</h2>
+                <div class="donation-form">
+                    <div class="form-group">
+                        <label for="receiverSelect">Alıcı Seç:</label>
+                        <select id="receiverSelect" class="form-control">
+                            <option value="">Alıcı seçin...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tokenSelect">Token Seç:</label>
+                        <select id="tokenSelect" class="form-control">
+                            <option value="">Token seçin...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="donationAmount">Miktar:</label>
+                        <input type="number" id="donationAmount" class="form-control" placeholder="0.0" step="0.01" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="donationMessage">Mesaj (opsiyonel):</label>
+                        <textarea id="donationMessage" class="form-control" placeholder="Bağış mesajınız..."></textarea>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="approveDonation" class="btn btn-secondary">
+                            <i class="fas fa-check"></i> Token Onaylama
+                        </button>
+                        <button id="makeDonation" class="btn btn-primary">
+                            <i class="fas fa-heart"></i> Bağış Yap
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meta Transaction Section -->
+            <section class="meta-transaction-section">
+                <h2><i class="fas fa-rocket"></i> Gassız Bağış (Meta Transaction)</h2>
+                <div class="meta-info">
+                    <p><i class="fas fa-info-circle"></i> Bu özellik ile bağış yaparken gas ücreti ödemezsiniz!</p>
+                </div>
+                <button id="makeMetaDonation" class="btn btn-special">
+                    <i class="fas fa-magic"></i> Gassız Bağış Yap
+                </button>
+            </section>
+
+            <!-- Balance Section -->
+            <section class="balance-section">
+                <h2><i class="fas fa-coins"></i> Token Bakiyeleriniz</h2>
+                <div id="balancesList" class="balances-list">
+                    <!-- Bakiyeler buraya yüklenecek -->
+                </div>
+            </section>
+
+            <!-- Recent Donations -->
+            <section class="recent-donations-section">
+                <h2><i class="fas fa-history"></i> Son Bağışlar</h2>
+                <div id="recentDonations" class="donations-list">
+                    <!-- Son bağışlar buraya yüklenecek -->
+                </div>
+            </section>
+
+            <!-- Admin Panel (Sadece owner için) -->
+            <section id="adminPanel" class="admin-panel" style="display: none;">
+                <h2><i class="fas fa-cog"></i> Yönetici Paneli</h2>
+                
+                <div class="admin-section">
+                    <h3>Token Yönetimi</h3>
+                    <div class="form-group">
+                        <input type="text" id="newTokenAddress" class="form-control" placeholder="Token adresi">
+                        <input type="text" id="newTokenName" class="form-control" placeholder="Token adı">
+                        <button id="addToken" class="btn btn-primary">Token Ekle</button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Alıcı Yönetimi</h3>
+                    <div class="form-group">
+                        <input type="text" id="newReceiverAddress" class="form-control" placeholder="Alıcı adresi">
+                        <input type="text" id="newReceiverName" class="form-control" placeholder="Alıcı adı">
+                        <button id="addReceiver" class="btn btn-primary">Alıcı Ekle</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="loading-spinner"></div>
+                <p id="loadingText">İşlem yapılıyor...</p>
+            </div>
+        </div>
+
+        <!-- Transaction Result Modal -->
+        <div id="resultModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="contracts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

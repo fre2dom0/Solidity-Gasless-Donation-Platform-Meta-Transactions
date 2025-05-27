@@ -1,0 +1,786 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_trustedForwarder",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "OwnableInvalidOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "OwnableUnauthorizedAccount",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "donor",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "showable",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "date",
+						"type": "uint256"
+					}
+				],
+				"name": "Donated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiverAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					}
+				],
+				"name": "addReceiver",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"name": "addToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllReceivers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_description",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ReceiverManager.Receiver[]",
+						"name": "receiverData",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pageSize",
+						"type": "uint256"
+					}
+				],
+				"name": "getAllReceiversPaginated",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_description",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ReceiverManager.Receiver[]",
+						"name": "receiverData",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllTokens",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct AllowedTokenManager.AllowedToken[]",
+						"name": "allowdTokenData",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pageSize",
+						"type": "uint256"
+					}
+				],
+				"name": "getAllTokensPaginated",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct AllowedTokenManager.AllowedToken[]",
+						"name": "allowdTokenData",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiverAddress",
+						"type": "address"
+					}
+				],
+				"name": "getReceiverByAddress",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_description",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct ReceiverManager.Receiver",
+						"name": "receiverData",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "getTokenByAddress",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "_address",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "_name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "_symbol",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "_isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "_totalDonationAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct AllowedTokenManager.AllowedToken",
+						"name": "allowdTokenData",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "forwarder",
+						"type": "address"
+					}
+				],
+				"name": "isTrustedForwarder",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiverAddress",
+						"type": "address"
+					}
+				],
+				"name": "removeReceiver",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "removeToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "trustedForwarder",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiverAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateReceiverActivity",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateTokenActivity",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "A platform for making ERC20 donations with meta-transactions",
+			"errors": {
+				"OwnableInvalidOwner(address)": [
+					{
+						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
+					}
+				],
+				"OwnableUnauthorizedAccount(address)": [
+					{
+						"details": "The caller account is not authorized to perform an operation."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {
+				"addReceiver(address,string,string)": {
+					"details": "Add a receiver to receivers mapping and receiverAddresses array",
+					"params": {
+						"description": "The description of the receiver",
+						"name": "The name of the receiver",
+						"receiverAddress": "The address of the receiver"
+					}
+				},
+				"addToken(address,string,string)": {
+					"details": "Add a token to allowedTokens mapping and allowedTokenAdresses array",
+					"params": {
+						"name": "The name of the token",
+						"symbol": "The symbol of the token",
+						"tokenAddress": "The address of the token"
+					}
+				},
+				"constructor": {
+					"details": "Constructor to initialize the contract with trusted forwarder for meta-transactions",
+					"params": {
+						"_trustedForwarder": "The address of the trusted forwarder for meta-transactions"
+					}
+				},
+				"getAllReceivers()": {
+					"details": "Gets all receivers",
+					"returns": {
+						"receiverData": "The information of receiver"
+					}
+				},
+				"getAllReceiversPaginated(uint256,uint256)": {
+					"details": "Gets all receivers with pagination",
+					"params": {
+						"pageSize": "How much data per search",
+						"startIndex": "Which index to start searching"
+					},
+					"returns": {
+						"receiverData": "The information of receiver"
+					}
+				},
+				"getAllTokens()": {
+					"details": "Gets all receivers",
+					"returns": {
+						"allowdTokenData": "The information of receiver"
+					}
+				},
+				"getAllTokensPaginated(uint256,uint256)": {
+					"details": "Gets all tokens with pagination",
+					"params": {
+						"pageSize": "How much data per search",
+						"startIndex": "Which index to start searching"
+					},
+					"returns": {
+						"allowdTokenData": "The information of receiver"
+					}
+				},
+				"getReceiverByAddress(address)": {
+					"details": "Gets only one receiver by address",
+					"params": {
+						"receiverAddress": "The address of receiver "
+					},
+					"returns": {
+						"receiverData": "The information of receiver"
+					}
+				},
+				"getTokenByAddress(address)": {
+					"details": "Gets only one receiver by address",
+					"params": {
+						"tokenAddress": "The address of token "
+					},
+					"returns": {
+						"allowdTokenData": "The information of token"
+					}
+				},
+				"isTrustedForwarder(address)": {
+					"details": "Indicates whether any particular address is the trusted forwarder."
+				},
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"removeReceiver(address)": {
+					"details": "Remove a receiver from receivers mapping and receiverAddresses array",
+					"params": {
+						"receiverAddress": "The address of the receiver"
+					}
+				},
+				"removeToken(address)": {
+					"details": "Remove a token from allowedTokens mapping and allowedTokenAdresses array",
+					"params": {
+						"tokenAddress": "The address of the receiver"
+					}
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				},
+				"trustedForwarder()": {
+					"details": "Returns the address of the trusted forwarder."
+				},
+				"updateReceiverActivity(address)": {
+					"details": "Update a receiver's activity status from false to true or quite the opposite",
+					"params": {
+						"receiverAddress": "The address of the receiver"
+					}
+				},
+				"updateTokenActivity(address)": {
+					"details": "Update a token's activity status from false to true or quite the opposite",
+					"params": {
+						"tokenAddress": "The address of the token"
+					}
+				}
+			},
+			"title": "DonationPlatform",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"DonationPlatform.sol": "DonationPlatform"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
+				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC1363.sol": {
+			"keccak256": "0x9b6b3e7803bc5f2f8cd7ad57db8ac1def61a9930a5a3107df4882e028a9605d7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://da62d6be1f5c6edf577f0cb45666a8aa9c2086a4bac87d95d65f02e2f4c36a4b",
+				"dweb:/ipfs/QmNkpvBpoCMvX8JwAFNSc5XxJ2q5BXJpL5L1txb4QkqVFF"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC165.sol": {
+			"keccak256": "0xde7e9fd9aee8d4f40772f96bb3b58836cbc6dfc0227014a061947f8821ea9724",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11fea9f8bc98949ac6709f0c1699db7430d2948137aa94d5a9e95a91f61a710a",
+				"dweb:/ipfs/QmQdfRXxQjwP6yn3DVo1GHPpriKNcFghSPi94Z1oKEFUNS"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC20.sol": {
+			"keccak256": "0xce41876e78d1badc0512229b4d14e4daf83bc1003d7f83978d18e0e56f965b9c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a2608291cb038b388d80b79a06b6118a42f7894ff67b7da10ec0dbbf5b2973ba",
+				"dweb:/ipfs/QmWohqcBLbcxmA4eGPhZDXe5RYMMEEpFq22nfkaUMvTfw1"
+			]
+		},
+		"@openzeppelin/contracts/metatx/ERC2771Context.sol": {
+			"keccak256": "0x0b030a33274bde015419d99e54c9164f876a7d10eb590317b79b1d5e4ab23d99",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://68e5f96988198e8efd25ddef0d89750b4daebb7fd1204fa7f5eaccdfcb3398c8",
+				"dweb:/ipfs/QmaM6nNkf9UmEtQraopuZamEWCdTWp7GvuN3pjMQrNCHxm"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://df6f0c459663c9858b6cba2cda1d14a7d05a985bed6d2de72bd8e78c25ee79db",
+				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+			"keccak256": "0x982c5cb790ab941d1e04f807120a71709d4c313ba0bfc16006447ffbd27fbbd5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8150ceb4ac947e8a442b2a9c017e01e880b2be2dd958f1fa9bc405f4c5a86508",
+				"dweb:/ipfs/QmbcBmFX66AY6Kbhnd5gx7zpkgqnUafo43XnmayAM7zVdB"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"AllowedTokenManager.sol": {
+			"keccak256": "0x82b18732b7c903501bbc1bcc7148416b1dc03fc628cfd1e5022d25651cfc6575",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d0d0b83a060d3ddb05056e79b978e88ea3fb6197650c9bf6755df7b794022dfe",
+				"dweb:/ipfs/QmXdtsmAarp6V32NjpcLxDupRMe2XwUTf3qSTW96sxkFp4"
+			]
+		},
+		"DonationPlatform.sol": {
+			"keccak256": "0x718a6be2d4b1b47df0931a13c9e2179f0b7c54d7da32e2b862d02f6bc27d503a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://60e61c019b7dfa1fafced497b27d7669830f6f9a44da43b0787423dd8414236a",
+				"dweb:/ipfs/QmRAeL9UUQN9pApGPraWWLfj3mdC95jYkEBMvKCkp7CGFT"
+			]
+		},
+		"ReceiverManager.sol": {
+			"keccak256": "0x692c490451041e7139fafa99dd4cb473ebb6ef2a2f25f729dbd451bafd684ba1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://024eb6be46d49106e0b57acc0bcaf7356a306d7a077edb236e13c17e5ee9a16c",
+				"dweb:/ipfs/QmTzAixBe4PoijyGYN4eWdbawfwrNeyYv1Ba5EsUtxvhxd"
+			]
+		}
+	},
+	"version": 1
+}
