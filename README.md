@@ -64,6 +64,8 @@ npm start
 5. Approve tokens (gasless using permit)
 6. Click "Donate (Gas-Free)"
 
+NOTE : ONLY OWNER CAN SEE NAVBAR
+
 ### Managing Tokens (Owner Only)
 1. Navigate to Token Management
 2. Add new tokens with address, name, and symbol
@@ -118,3 +120,6 @@ Run tests with:
 ```bash
 npx hardhat test
 ```
+![homedp](https://github.com/user-attachments/assets/b0b36524-052e-42a3-b1f6-54da5b53355a)
+![receiverdp](https://github.com/user-attachments/assets/604cf6cb-4710-4f7e-a945-622509fa2a4f)
+![tokenmanagerdp](https://github.com/user-attachments/assets/75e218f3-41ef-4705-a3e4-6813f24182da)
